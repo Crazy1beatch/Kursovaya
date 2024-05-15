@@ -48,7 +48,7 @@ class Golay:
         for i in range(12):
             I.append([])
             for j in range(12):
-                I[i][j] = 1 if (i == j) else 0
+                I[i].append(1 if (i == j) else 0)
 
         for i in range(12):
             for j in range(24):
