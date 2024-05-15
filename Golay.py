@@ -106,8 +106,6 @@ class Golay:
     def decode(self):
         self.get_syndrome()
         e = [0] * 24
-        decodable = True
-        sp = [0] * 12
         print("Trying to decode...")
         if self.weight(self.s) <= 3:
             for i in range(24):
@@ -133,6 +131,7 @@ class Golay:
                 self.print_result(e)
                 return
 
+        sp = [0] * 12
         for i in range(12):
             for j in range(12):
                 sp[j] = self.bin_add(sp[j], self.bin_mul(self.s[i], self.P[i][j]))
