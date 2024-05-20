@@ -1,7 +1,5 @@
 class Golay:
     def __init__(self):
-        self.k = 12
-        self.n = 24
         self.s = [0] * 12
         self.r = [0] * 24
         self.P = [
@@ -123,10 +121,10 @@ class Golay:
                 spi[j] = self.bin_add(self.s[j], self.P[i][j])
             if self.weight(spi) <= 2:
                 for j in range(24):
-                    if self.k < 12:
-                        e[self.k] = spi[self.k]
+                    if j < 12:
+                        e[j] = spi[j]
                     else:
-                        e[self.k] = (int(i == self.k) - 12)
+                        e[j] = int(i == (j - 12))
                 print(f"w(s + p{i}) = {self.weight(spi)} <= 2")
                 self.print_result(e)
                 return
@@ -152,10 +150,10 @@ class Golay:
                 sppi[j] = self.bin_add(sp[j], self.P[i][j])
             if self.weight(sppi) == 2:
                 for j in range(24):
-                    if self.k < 12:
-                        e[self.k] = int(i == self.k)
+                    if j < 12:
+                        e[j] = int(i == j)
                     else:
-                        e[self.k] = sppi[self.k - 12]
+                        e[j] = sppi[j - 12]
                 print(f"w(s*P + p{i}) = {self.weight(sppi)}")
                 self.print_result(e)
                 return
