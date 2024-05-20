@@ -2,7 +2,6 @@ class Golay:
     def __init__(self):
         self.k = 12
         self.n = 24
-        self.u = [0] * 24
         self.s = [0] * 12
         self.r = [0] * 24
         self.P = [
@@ -53,18 +52,19 @@ class Golay:
         for i in range(12):
             for j in range(24):
                 if j < 12:
-                    self.HT[j][i] = I[i][j]
-                    self.G[i][j] = self.P[i][j]
+                    self.HT[j][i] = self.P[i][j]
+                    self.G[i][j] = I[i][j]
                 else:
-                    self.G[i][j] = I[i][j - 12]
-                    self.HT[j][i] = self.P[i][j - 12]
+                    self.G[i][j] = self.P[i][j - 12]
+                    self.HT[j][i] = I[i][j - 12]
+        print()
 
     def encode(self, message: []):
         print("Encoded codeword: ", end='')
         for i in range(24):
             for j in range(12):
-                self.r[i] = self.u[i] = self.bin_add(self.u[i], self.bin_mul(message[j], self.G[j][i]))
-            print(self.u[i], end='')
+                self.r[i] = self.bin_add(self.r[i], self.bin_mul(message[j], self.G[j][i]))
+            print(self.r[i], end='')
         print()
 
     def add_errors(self):
@@ -88,7 +88,7 @@ class Golay:
     def get_syndrome(self):
         for i in range(24):
             for j in range(12):
-                self.s[j] = self.bin_add(self.s[j], self.bin_mul(self.r[i], self.HT[i][j]))
+                self.s[j] = self.bin_add(self.s[j], self.bin_mul(self.r[i], self.HT[(i + 12) % 24][j]))
         print("Syndrome: ", end='')
         for i in range(12):
             print(self.s[i], end='')
